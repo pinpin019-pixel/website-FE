@@ -1,0 +1,24 @@
+{
+  "name": "website-fe",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Frontend mẫu: màn hình sản phẩm (React + Vite), gọi API của website-BE",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "vite --port 5173 --strictPort",
+    "build": "vite build",
+    "test": "vitest run",
+    "e2e": "playwright test"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1",
+    "@vitejs/plugin-react": "4.3.4",
+    "vite": "5.4.11",
+    "vitest": "2.1.8"
+  }
+}
