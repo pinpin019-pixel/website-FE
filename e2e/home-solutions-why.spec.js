@@ -32,7 +32,7 @@ const intro = (page) => solutions(page).locator('.solutions__intro');
 const cards = (page) => solutions(page).locator('.solutions__card');
 const why = (page) => page.locator('section.why');
 const statNums = (page) => why(page).locator('.why__num');
-const statLabels = (page) => why(page).locator('.why__label');
+const statLabels = (page) => why(page).locator('.why__stat-label');
 
 async function blockContent(page, key) {
   const res = await page.request.get('http://localhost:3001/api/home?lang=en');
