@@ -14,8 +14,11 @@ export const listProducts = () => fetch('/api/products').then(handle);
 // KAN-6: nội dung trang chủ { lang, blocks: [{ key, lang, content }] }
 export const getHome = (lang) => fetch(`/api/home?lang=${encodeURIComponent(lang)}`).then(handle);
 
-// KAN-10: khung rỗng (mốc test)
-export const listPosts = async () => [];
+// KAN-10: bài viết [{ id, type, lang, title, excerpt, imageUrl, url, pinned, publishedAt }]
+export const listPosts = ({ type, limit, lang }) => {
+  const q = new URLSearchParams({ type, limit: String(limit), lang });
+  return fetch(`/api/posts?${q}`).then(handle);
+};
 
 export const createProduct = (product) => fetch('/api/products', {
   method: 'POST',
