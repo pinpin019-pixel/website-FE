@@ -20,6 +20,14 @@ export function testimonialInterval(content) {
   return typeof ms === 'number' && ms > 0 ? ms : TESTIMONIAL_INTERVAL_MS;
 }
 
+// Ảnh của slide: chân dung riêng → alt tên người; ảnh là logo (không có photoUrl hoặc trùng logoUrl) → alt tên công ty
+export function slideMedia(it) {
+  const src = it?.photoUrl || it?.logoUrl;
+  if (!src) return null;
+  const isLogo = !it.photoUrl || it.photoUrl === it.logoUrl;
+  return { src, alt: isLogo && filled(it.company) ? it.company : it.name };
+}
+
 // Chỉ nhận URL http(s) tuyệt đối; file video → thẻ video, còn lại (URL nhúng) → iframe
 export function videoSource(url) {
   if (!filled(url)) return null;
@@ -84,7 +92,7 @@ export default function Testimonials({ content, lang }) {
           {items.map((it, i) => {
             const active = i === c.index;
             const video = videoSource(it.videoUrl);
-            const media = it.photoUrl || it.logoUrl;
+            const media = slideMedia(it);
             const videoTitle = `${t(lang, 'playVideo')}: ${it.name}`;
             return (
               <div
@@ -100,7 +108,7 @@ export default function Testimonials({ content, lang }) {
                     <Player source={video} title={videoTitle} />
                   ) : (
                     <>
-                      {media && <img className="testimonial__photo" src={media} alt={it.name} loading="lazy" />}
+                      {media && <img className="testimonial__photo" src={media.src} alt={media.alt} loading="lazy" />}
                       {video && (
                         <button type="button" className="testimonial__play" aria-label={videoTitle} onClick={() => play(i)}>
                           <span aria-hidden="true">▶</span>
