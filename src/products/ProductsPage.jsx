@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { createProduct, listProducts } from './api.js';
-import { formatPrice } from './format.js';
+import { createProduct, listProducts } from '../api.js';
+import { formatPrice } from '../format.js';
 
-export default function App() {
+// Màn hình Sản phẩm (trước ở App.jsx, KAN-6 chuyển sang /products)
+export default function ProductsPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
