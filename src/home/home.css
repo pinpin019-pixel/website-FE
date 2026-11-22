@@ -27,3 +27,256 @@
   background: var(--bg);
   border: 1px solid #dfe3ea;
 }
+
+/* Trang chủ chiếm trọn chiều ngang, không có lề mặc định của body */
+body:has(.home) { margin: 0; }
+
+/* ===== Header (KAN-7) ===== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(10, 37, 64, .06);
+}
+.site-header__inner {
+  position: relative;
+  max-width: 1240px;
+  height: 72px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.site-header__logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: #1b75bb;
+  font-weight: 800;
+  text-decoration: none;
+}
+.site-header__logo img { display: block; height: 40px; width: auto; max-width: 180px; }
+.home .site-header__burger {
+  display: none;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: var(--radius);
+  background: none;
+  color: var(--navy);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+.nav__menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.nav__item { position: relative; }
+.home .nav__top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 72px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.home .nav__top:hover,
+.home .nav__top:focus-visible { color: var(--cyan); }
+.nav__caret {
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform .2s;
+}
+.nav__panel a {
+  display: block;
+  padding: 6px 0;
+  color: #333;
+  font-size: 14px;
+  text-decoration: none;
+}
+.nav__panel a:hover,
+.nav__panel a:focus-visible { color: var(--cyan); }
+.nav__group-title {
+  margin: 4px 0 6px;
+  color: var(--navy);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.nav__lang select {
+  margin-left: 12px;
+  padding: 8px 12px;
+  border: 1px solid #e3e9f0;
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Desktop: rê chuột hoặc focus bàn phím mở menu con */
+@media (min-width: 992px) {
+  .nav__panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 240px;
+    padding: 16px 24px;
+    background: #fff;
+    border-radius: 0 0 var(--radius) var(--radius);
+    box-shadow: 0 12px 30px rgba(10, 37, 64, .12);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity .2s, transform .2s, visibility .2s;
+  }
+  .nav__item:hover > .nav__panel,
+  .nav__item:focus-within > .nav__panel {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  /* Mega menu căn theo khung header để không tràn ngang */
+  .nav__item--mega { position: static; }
+  .nav__item--mega > .nav__panel {
+    left: 20px;
+    right: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px 32px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .home .nav__top { padding: 0 8px; font-size: 14px; }
+  .nav__lang select { margin-left: 6px; padding: 6px 8px; }
+}
+
+/* Dưới 992px: hamburger, danh sách dọc, menu con kiểu accordion */
+@media (max-width: 991px) {
+  .home .site-header__burger { display: block; }
+  .nav__menu {
+    display: none;
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    max-height: calc(100vh - 72px);
+    overflow: auto;
+    padding: 8px 20px 20px;
+    background: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .08);
+  }
+  .nav__menu.is-open { display: flex; }
+  .home .nav__top {
+    width: 100%;
+    height: auto;
+    padding: 12px 0;
+    justify-content: space-between;
+    text-align: left;
+  }
+  .nav__item.is-open .nav__caret { transform: rotate(-135deg) translateY(-2px); }
+  .nav__panel { display: none; padding: 0 0 10px 12px; }
+  .nav__item.is-open > .nav__panel { display: block; }
+  .nav__lang { padding-top: 10px; }
+  .nav__lang select { margin-left: 0; }
+}
+
+/* ===== Footer (KAN-7) ===== */
+.site-footer {
+  padding: 60px 0 24px;
+  background: var(--bg);
+  border-top: 1px solid #e3e9f0;
+}
+.site-footer__inner { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
+.site-footer__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 36px 30px;
+}
+.site-footer__title {
+  margin: 0 0 14px;
+  color: var(--navy);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.site-footer__col a {
+  display: block;
+  padding: 4px 0;
+  color: #5b6675;
+  font-size: 14px;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.site-footer__col a:hover,
+.site-footer__col a:focus-visible { color: var(--cyan); }
+.site-footer__contact {
+  list-style: none;
+  margin: 32px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  color: #5b6675;
+  font-size: 14px;
+}
+.site-footer__contact a { color: inherit; }
+.site-footer__contact-label { font-weight: 600; color: var(--navy); }
+.site-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 44px;
+  padding-top: 20px;
+  border-top: 1px solid #e3e9f0;
+  color: #5b6675;
+  font-size: 13px;
+}
+.site-footer__social { display: flex; gap: 12px; }
+.site-footer__social a {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--navy);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.site-footer__social a:hover,
+.site-footer__social a:focus-visible { background: var(--cyan); }
+.site-footer__copyright { margin: 0; }
+
+@media (max-width: 767px) {
+  .site-footer__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

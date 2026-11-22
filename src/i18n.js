@@ -26,10 +26,22 @@ const STRINGS = {
   en: {
     loading: 'Loading…',
     homeLoadError: 'Sorry, we couldn’t load this page right now. Please try again later.',
+    menu: 'Menu',
+    mainNav: 'Main navigation',
+    language: 'Language',
+    address: 'Address',
+    email: 'Email',
+    phone: 'Phone',
   },
   vi: {
     loading: 'Đang tải…',
     homeLoadError: 'Xin lỗi, hiện chưa tải được trang. Vui lòng thử lại sau.',
+    menu: 'Menu',
+    mainNav: 'Điều hướng chính',
+    language: 'Ngôn ngữ',
+    address: 'Địa chỉ',
+    email: 'Email',
+    phone: 'Điện thoại',
   },
 };
 

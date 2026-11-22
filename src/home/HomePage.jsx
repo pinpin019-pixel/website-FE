@@ -3,10 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getHome } from '../api.js';
 import { readStoredLang, resolveLang, storeLang, t } from '../i18n.js';
+import Header from './Header.jsx';
+import Footer from './Footer.jsx';
 import './home.css';
 
 // key khối → component; story của từng khối thêm dòng của mình. Khối chưa có component thì bỏ qua.
-export const BLOCK_COMPONENTS = {};
+export const BLOCK_COMPONENTS = {
+  header: Header,
+  footer: Footer,
+};
 
 export function renderableBlocks(blocks, components = BLOCK_COMPONENTS) {
   return (blocks || []).filter((b) => components[b.key]);
@@ -39,7 +44,8 @@ export default function HomePage() {
 
   useEffect(() => {
     let alive = true;
-    setState({ status: 'loading', blocks: [] });
+    // Đổi ngôn ngữ: giữ khối cũ trên màn hình tới khi có dữ liệu mới (header không biến mất)
+    setState((s) => ({ status: 'loading', blocks: s.blocks }));
     getHome(lang)
       .then((data) => { if (alive) setState({ status: 'ok', blocks: data.blocks || [] }); })
       .catch(() => { if (alive) setState({ status: 'error', blocks: [] }); });
@@ -55,7 +61,7 @@ export default function HomePage() {
 
   return (
     <div className="home">
-      {state.status === 'loading' && <p className="home__status" aria-busy="true">{t(lang, 'loading')}</p>}
+      {state.status === 'loading' && state.blocks.length === 0 && <p className="home__status" aria-busy="true">{t(lang, 'loading')}</p>}
       {state.status === 'error' && <p className="home__error" role="alert">{t(lang, 'homeLoadError')}</p>}
       {renderableBlocks(state.blocks).map((b) => {
         const Block = BLOCK_COMPONENTS[b.key];
