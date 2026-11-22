@@ -3,6 +3,7 @@
 // Nút chat chưa mở hệ thống chat nào (giả định A-05); sự kiện chat_open gắn ở story đo lường.
 import React, { useEffect, useState } from 'react';
 import { t } from '../i18n.js';
+import { track } from './tracking.js';
 
 export const GREETING_AUTOHIDE_MS = 5000;
 const MOBILE_MAX_WIDTH = 767;
@@ -76,7 +77,7 @@ export default function Floating({ content, lang }) {
           </button>
         </div>
       )}
-      <button type="button" className="chat-btn" aria-label={t(lang, 'chat')}>
+      <button type="button" className="chat-btn" aria-label={t(lang, 'chat')} onClick={() => track('chat_open')}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" focusable="false">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
         </svg>

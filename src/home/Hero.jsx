@@ -3,6 +3,7 @@
 import React, { useRef } from 'react';
 import useCarousel from './useCarousel.js';
 import { t } from '../i18n.js';
+import { track } from './tracking.js';
 
 export const MAX_SLIDES = 5;
 export const DEFAULT_INTERVAL_MS = 6000;
@@ -78,7 +79,14 @@ export default function Hero({ content, lang }) {
                   <Title className="hero__title">{s.title}</Title>
                   {s.description && <p className="hero__desc">{s.description}</p>}
                   {s.ctaLabel && (
-                    <a className="hero__cta" href={safeHref(s.ctaHref)} tabIndex={active ? undefined : -1}>{s.ctaLabel}</a>
+                    <a
+                      className="hero__cta"
+                      href={safeHref(s.ctaHref)}
+                      tabIndex={active ? undefined : -1}
+                      onClick={() => track('cta_click', { label: s.ctaLabel, location: 'hero' })}
+                    >
+                      {s.ctaLabel}
+                    </a>
                   )}
                 </div>
               </div>

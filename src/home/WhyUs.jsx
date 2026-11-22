@@ -2,6 +2,7 @@
 // Số đếm tăng từ 0 tới giá trị trong 1,5 giây khi khối vào màn hình; giảm chuyển động → hiện ngay giá trị cuối.
 import React, { useEffect, useRef, useState } from 'react';
 import { safeHref } from './Hero.jsx';
+import { track } from './tracking.js';
 
 export const COUNT_DURATION_MS = 1500;
 const REDUCED_MOTION = '(prefers-reduced-motion: reduce)';
@@ -78,7 +79,15 @@ export default function WhyUs({ content }) {
         {c.label && <div className="section-label why__label">{c.label}</div>}
         <h2 id="why-title" className="section-title why__title">{c.title}</h2>
         {c.lead && <p className="why__lead">{c.lead}</p>}
-        {c.ctaLabel && <a className="btn btn--cyan" href={safeHref(c.ctaHref)}>{c.ctaLabel}</a>}
+        {c.ctaLabel && (
+          <a
+            className="btn btn--cyan"
+            href={safeHref(c.ctaHref)}
+            onClick={() => track('cta_click', { label: c.ctaLabel, location: 'why' })}
+          >
+            {c.ctaLabel}
+          </a>
+        )}
         {stats.length > 0 && (
           <ul className="why__stats" ref={statsRef}>
             {stats.map((s, i) => (

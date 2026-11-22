@@ -50,6 +50,10 @@ const STRINGS = {
     chat: 'Chat',
     closeGreeting: 'Close greeting',
     backToTop: 'Back to top',
+    cookieRegion: 'Cookie consent',
+    cookieMessage: 'We use cookies to measure how this page is used. You can accept or reject analytics cookies.',
+    cookieAccept: 'Accept',
+    cookieReject: 'Reject',
   },
   vi: {
     loading: 'Đang tải…',
@@ -78,6 +82,10 @@ const STRINGS = {
     chat: 'Trò chuyện',
     closeGreeting: 'Đóng lời chào',
     backToTop: 'Lên đầu trang',
+    cookieRegion: 'Đồng ý cookie',
+    cookieMessage: 'Chúng tôi dùng cookie để đo lường cách trang này được sử dụng. Bạn có thể đồng ý hoặc từ chối cookie phân tích.',
+    cookieAccept: 'Đồng ý',
+    cookieReject: 'Từ chối',
   },
 };
 

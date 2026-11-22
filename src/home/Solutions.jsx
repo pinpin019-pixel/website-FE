@@ -4,6 +4,7 @@ import React from 'react';
 import { safeHref } from './Hero.jsx';
 import { truncateWords } from './text.js';
 import { t } from '../i18n.js';
+import { track } from './tracking.js';
 
 export const DESCRIPTION_MAX_WORDS = 50;
 
@@ -30,7 +31,13 @@ export default function Solutions({ content, lang }) {
           <h2 id="solutions-title" className="section-title">{c.title}</h2>
           {c.intro && <p className="solutions__text">{c.intro}</p>}
           {c.ctaLabel && (
-            <a className="btn btn--navy" href={safeHref(c.ctaHref)}>{c.ctaLabel}</a>
+            <a
+              className="btn btn--navy"
+              href={safeHref(c.ctaHref)}
+              onClick={() => track('cta_click', { label: c.ctaLabel, location: 'solutions' })}
+            >
+              {c.ctaLabel}
+            </a>
           )}
         </div>
         <div className="solutions__cards">
@@ -39,7 +46,7 @@ export default function Solutions({ content, lang }) {
               <h3>{card.title}</h3>
               {card.description && <p>{card.description}</p>}
               {card.imageUrl && <img src={card.imageUrl} alt={card.title} loading="lazy" />}
-              <a className="solutions__more" href={card.href}>{t(lang, 'learnMore')} <span aria-hidden="true">›</span></a>
+              <a className="solutions__more" href={card.href} onClick={() => track('solution_click')}>{t(lang, 'learnMore')} <span aria-hidden="true">›</span></a>
             </article>
           ))}
         </div>
