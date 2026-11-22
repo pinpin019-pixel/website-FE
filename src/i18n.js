@@ -47,6 +47,9 @@ const STRINGS = {
     nextBand: 'Next {label}',
     testimonialTabs: 'Customers',
     playVideo: 'Play video',
+    chat: 'Chat',
+    closeGreeting: 'Close greeting',
+    backToTop: 'Back to top',
   },
   vi: {
     loading: 'Đang tải…',
@@ -72,6 +75,9 @@ const STRINGS = {
     nextBand: '{label} sau',
     testimonialTabs: 'Khách hàng',
     playVideo: 'Phát video',
+    chat: 'Trò chuyện',
+    closeGreeting: 'Đóng lời chào',
+    backToTop: 'Lên đầu trang',
   },
 };
 

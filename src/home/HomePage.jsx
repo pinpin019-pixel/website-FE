@@ -13,6 +13,8 @@ import CaseStudies from './CaseStudies.jsx';
 import Media from './Media.jsx';
 import { Awards, Certificates, Partners } from './LogoCarousels.jsx';
 import Testimonials from './Testimonials.jsx';
+import Cta from './Cta.jsx';
+import Floating from './Floating.jsx';
 import './home.css';
 
 // key khối → component; story của từng khối thêm dòng của mình. Khối chưa có component thì bỏ qua.
@@ -28,8 +30,10 @@ export const BLOCK_COMPONENTS = {
   partners: Partners,
   media: Media,
   testimonials: Testimonials,
+  cta: Cta,
   footer: Footer,
 };
+// Khối floating (KAN-12) không nằm ở đây: dựng một lần, cố định trên màn hình, không theo thứ tự khối.
 
 export function renderableBlocks(blocks, components = BLOCK_COMPONENTS) {
   return (blocks || []).filter((b) => components[b.key]);
@@ -37,6 +41,10 @@ export function renderableBlocks(blocks, components = BLOCK_COMPONENTS) {
 
 export function seoOf(blocks) {
   return (blocks || []).find((b) => b.key === 'seo')?.content ?? null;
+}
+
+export function floatingOf(blocks) {
+  return (blocks || []).find((b) => b.key === 'floating')?.content ?? null;
 }
 
 function setMetaDescription(text) {
@@ -85,6 +93,7 @@ export default function HomePage() {
         const Block = BLOCK_COMPONENTS[b.key];
         return <Block key={b.key} content={b.content} lang={lang} />;
       })}
+      {state.blocks.length > 0 && <Floating content={floatingOf(state.blocks)} lang={lang} />}
     </div>
   );
 }
