@@ -26,7 +26,8 @@ function prefersReducedMotion() {
 }
 
 // idle (chưa thấy khối) → running (đang đếm) → done (giá trị cuối)
-function useCountUp(ref) {
+// hasTarget: khối có phần tử chỉ số để quan sát (có thể chỉ xuất hiện sau khi đổi dữ liệu)
+function useCountUp(ref, hasTarget) {
   const [state, setState] = useState(() => (
     prefersReducedMotion() || typeof IntersectionObserver === 'undefined' ? 'done' : 'idle'
   ));
@@ -42,7 +43,7 @@ function useCountUp(ref) {
     }, { threshold: 0.3 });
     io.observe(ref.current);
     return () => io.disconnect();
-  }, [state, ref]);
+  }, [state, ref, hasTarget]);
 
   useEffect(() => {
     if (state !== 'running') return undefined;
@@ -67,7 +68,7 @@ export default function WhyUs({ content }) {
   const c = content || {};
   const stats = whyStats(c);
   const statsRef = useRef(null);
-  const { state, elapsed } = useCountUp(statsRef);
+  const { state, elapsed } = useCountUp(statsRef, stats.length > 0);
   const shown = (v) => (state === 'done' ? v : state === 'running' ? countValue(v, elapsed) : 0);
 
   return (

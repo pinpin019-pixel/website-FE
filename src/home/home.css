@@ -378,7 +378,7 @@ body:has(.home) { margin: 0; }
 .home .clients__nav:focus-visible { color: var(--cyan); }
 
 /* ===== Dùng chung cho các khối nội dung (KAN-9) ===== */
-.section-label {
+.home .section-label {
   margin: 0 0 12px;
   color: var(--cyan);
   font-size: 14px;
