@@ -1,0 +1,29 @@
+/* Trang chủ CMC Global — mọi style nằm trong phạm vi .home (theo design KAN-2) */
+.home {
+  --navy: #0A2540;
+  --cyan: #00BBE4;
+  --bg: #F6F9FC;
+  --text: #1d2330;
+  --radius: 6px;
+  font-family: 'Montserrat', system-ui, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text);
+  background: #fff;
+  min-height: 100vh;
+}
+
+.home *, .home *::before, .home *::after { box-sizing: border-box; }
+
+.home__status,
+.home__error {
+  max-width: 720px;
+  margin: 48px auto;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.home__error {
+  color: var(--navy);
+  background: var(--bg);
+  border: 1px solid #dfe3ea;
+}
