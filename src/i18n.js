@@ -41,6 +41,7 @@ const STRINGS = {
     clientsRegion: 'Our clients',
     prevLogos: 'Previous logos',
     nextLogos: 'Next logos',
+    learnMore: 'Learn more',
   },
   vi: {
     loading: 'Đang tải…',
@@ -60,6 +61,7 @@ const STRINGS = {
     clientsRegion: 'Khách hàng tiêu biểu',
     prevLogos: 'Logo trước',
     nextLogos: 'Logo sau',
+    learnMore: 'Xem thêm',
   },
 };
 

@@ -7,6 +7,8 @@ import Header from './Header.jsx';
 import Footer from './Footer.jsx';
 import Hero from './Hero.jsx';
 import ClientStrip from './ClientStrip.jsx';
+import Solutions from './Solutions.jsx';
+import WhyUs from './WhyUs.jsx';
 import './home.css';
 
 // key khối → component; story của từng khối thêm dòng của mình. Khối chưa có component thì bỏ qua.
@@ -14,6 +16,8 @@ export const BLOCK_COMPONENTS = {
   header: Header,
   hero: Hero,
   clients: ClientStrip,
+  solutions: Solutions,
+  why: WhyUs,
   footer: Footer,
 };
 
