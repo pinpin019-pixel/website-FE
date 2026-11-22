@@ -14,6 +14,9 @@ export const listProducts = () => fetch('/api/products').then(handle);
 // KAN-6: nội dung trang chủ { lang, blocks: [{ key, lang, content }] }
 export const getHome = (lang) => fetch(`/api/home?lang=${encodeURIComponent(lang)}`).then(handle);
 
+// KAN-10: khung rỗng (mốc test)
+export const listPosts = async () => [];
+
 export const createProduct = (product) => fetch('/api/products', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
