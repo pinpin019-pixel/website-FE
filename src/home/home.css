@@ -206,6 +206,177 @@ body:has(.home) { margin: 0; }
   .nav__lang select { margin-left: 0; }
 }
 
+/* ===== Hero slider (KAN-8) ===== */
+.hero {
+  position: relative;
+  height: 560px;
+  overflow: hidden;
+  overflow: clip; /* hidden vẫn bị cuộn ngang khi focus/click; clip thì không */
+  background: var(--navy);
+  touch-action: pan-y;
+}
+.hero__track {
+  display: flex;
+  height: 100%;
+  transition: transform .6s ease;
+}
+.hero__slide {
+  position: relative;
+  flex: 0 0 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  background-color: var(--navy);
+  background-size: cover;
+  background-position: center;
+}
+.hero__slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0, 62, 140, .75) 0%, rgba(0, 90, 180, .35) 45%, rgba(0, 0, 0, 0) 70%);
+}
+.hero__inner {
+  position: relative;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+.hero__text { max-width: 560px; color: #fff; }
+.hero .hero__title {
+  margin: 0 0 22px;
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+.hero__desc {
+  margin: 0 0 28px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.6;
+  opacity: .95;
+}
+.hero__cta {
+  display: inline-block;
+  padding: 12px 22px;
+  border-radius: var(--radius);
+  background: var(--navy);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.hero__cta:hover,
+.hero__cta:focus-visible { background: var(--cyan); }
+.home .hero__nav {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .25);
+  color: #fff;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+.home .hero__nav:hover,
+.home .hero__nav:focus-visible { background: rgba(255, 255, 255, .45); }
+.hero__nav--prev { left: 20px; }
+.hero__nav--next { right: 20px; }
+.hero__controls {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transform: translateX(-50%);
+}
+.home .hero__pause {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .25);
+  color: #fff;
+  font-size: 11px;
+  cursor: pointer;
+}
+.home .hero__pause:hover,
+.home .hero__pause:focus-visible { background: rgba(255, 255, 255, .45); }
+.hero__dots { display: flex; gap: 8px; }
+.home .hero__dots button {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, .5);
+  cursor: pointer;
+  transition: width .2s;
+}
+.home .hero__dots button[aria-current="true"] { width: 26px; background: #fff; }
+
+@media (max-width: 767px) {
+  .hero { height: 480px; }
+  .hero__inner { padding: 0 24px 40px; }
+  .hero .hero__title { font-size: 32px; }
+  .home .hero__nav { top: auto; bottom: 14px; width: 36px; height: 36px; font-size: 22px; transform: none; }
+  .hero__nav--prev { left: 12px; }
+  .hero__nav--next { right: 12px; }
+}
+
+/* ===== Dải logo khách hàng (KAN-8) ===== */
+.clients {
+  padding: 22px 0;
+  background: #fff;
+  border-bottom: 1px solid #e3e9f0;
+}
+.clients__inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.clients__view { flex: 1; min-width: 0; overflow: hidden; overflow: clip; }
+.clients__track {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  transition: transform .5s ease;
+}
+.clients__item {
+  flex: 0 0 calc(100% / var(--per-view, 6));
+  min-width: 0; /* ảnh lớn không được nới rộng ô logo */
+  height: 60px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.clients__item img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.home .clients__nav {
+  flex-shrink: 0;
+  padding: 4px 8px;
+  border: 0;
+  background: none;
+  color: #333;
+  font-size: 20px;
+  cursor: pointer;
+}
+.home .clients__nav:hover,
+.home .clients__nav:focus-visible { color: var(--cyan); }
+
 /* ===== Footer (KAN-7) ===== */
 .site-footer {
   padding: 60px 0 24px;
