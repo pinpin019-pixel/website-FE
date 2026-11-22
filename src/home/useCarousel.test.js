@@ -133,6 +133,35 @@ describe('KAN-8 createCarousel', () => {
   });
 });
 
+describe('KAN-11 createCarousel autoplay: false (dải Awards/Certificates/Partners chỉ chuyển bằng mũi tên)', () => {
+  let c;
+  beforeEach(() => { vi.useFakeTimers(); });
+  afterEach(() => { c?.stop(); vi.useRealTimers(); });
+
+  test('đã start nhưng không tự chuyển; next/prev/goTo vẫn chạy và quay vòng', () => {
+    c = createCarousel({ count: 4, intervalMs: 3000, autoplay: false });
+    c.start();
+    expect(c.playing).toBe(false);
+    vi.advanceTimersByTime(30000);
+    expect(c.index).toBe(0);
+    c.next(); expect(c.index).toBe(1);
+    vi.advanceTimersByTime(30000);
+    expect(c.index).toBe(1);
+    c.prev(); c.prev(); expect(c.index).toBe(3);
+    c.goTo(2); expect(c.index).toBe(2);
+    c.resume('user');
+    vi.advanceTimersByTime(30000);
+    expect(c.index).toBe(2);
+  });
+
+  test('mặc định vẫn tự chuyển (hero, dải khách hàng không đổi)', () => {
+    c = createCarousel({ count: 3, intervalMs: 1000 });
+    c.start();
+    vi.advanceTimersByTime(1000);
+    expect(c.index).toBe(1);
+  });
+});
+
 describe('KAN-8 useCarousel', () => {
   test('là hook (hàm) được export mặc định', () => {
     expect(typeof useCarousel).toBe('function');
