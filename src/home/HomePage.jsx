@@ -5,11 +5,15 @@ import { getHome } from '../api.js';
 import { readStoredLang, resolveLang, storeLang, t } from '../i18n.js';
 import Header from './Header.jsx';
 import Footer from './Footer.jsx';
+import Hero from './Hero.jsx';
+import ClientStrip from './ClientStrip.jsx';
 import './home.css';
 
 // key khối → component; story của từng khối thêm dòng của mình. Khối chưa có component thì bỏ qua.
 export const BLOCK_COMPONENTS = {
   header: Header,
+  hero: Hero,
+  clients: ClientStrip,
   footer: Footer,
 };
 
