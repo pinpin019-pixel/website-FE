@@ -42,6 +42,7 @@ const STRINGS = {
     prevLogos: 'Previous logos',
     nextLogos: 'Next logos',
     learnMore: 'Learn more',
+    postsLoadError: 'This section is unavailable right now.',
   },
   vi: {
     loading: 'Đang tải…',
@@ -62,6 +63,7 @@ const STRINGS = {
     prevLogos: 'Logo trước',
     nextLogos: 'Logo sau',
     learnMore: 'Xem thêm',
+    postsLoadError: 'Hiện chưa tải được mục này.',
   },
 };
 
@@ -69,13 +71,30 @@ export function t(lang, key) {
   return STRINGS[lang]?.[key] ?? STRINGS[DEFAULT_LANG][key] ?? key;
 }
 
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const pad = (n) => String(n).padStart(2, '0');
 
-// vi: dd/mm/yyyy; ngôn ngữ khác: "Nov 22, 2026". Giá trị không phải ngày → ''.
+// KAN-10 (FR-08.3): en "November 18, 2026"; vi "18/11/2026"; ja "2026年11月18日"; ko "2026년 11월 18일"
+const DATE_FORMATS = {
+  en: new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+  ja: new Intl.DateTimeFormat('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' }),
+  ko: new Intl.DateTimeFormat('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }),
+};
+
+// Chuỗi chỉ có ngày "YYYY-MM-DD" hiểu là ngày theo giờ máy (new Date() hiểu là 00:00 UTC, lệch ngày ở múi giờ âm)
+function toDate(x) {
+  if (x instanceof Date) return x;
+  if (typeof x === 'string') {
+    const m = x.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+    return new Date(x);
+  }
+  return new Date(NaN);
+}
+
+// Ngôn ngữ lạ → định dạng en. Giá trị không phải ngày → ''.
 export function formatDate(date, lang) {
-  const d = date instanceof Date ? date : new Date(date);
+  const d = toDate(date);
   if (Number.isNaN(d.getTime())) return '';
   if (lang === 'vi') return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
-  return `${MONTHS[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+  return (DATE_FORMATS[lang] || DATE_FORMATS.en).format(d);
 }

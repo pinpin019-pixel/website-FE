@@ -9,6 +9,8 @@ import Hero from './Hero.jsx';
 import ClientStrip from './ClientStrip.jsx';
 import Solutions from './Solutions.jsx';
 import WhyUs from './WhyUs.jsx';
+import CaseStudies from './CaseStudies.jsx';
+import Media from './Media.jsx';
 import './home.css';
 
 // key khối → component; story của từng khối thêm dòng của mình. Khối chưa có component thì bỏ qua.
@@ -18,6 +20,8 @@ export const BLOCK_COMPONENTS = {
   clients: ClientStrip,
   solutions: Solutions,
   why: WhyUs,
+  case_studies: CaseStudies,
+  media: Media,
   footer: Footer,
 };
 
