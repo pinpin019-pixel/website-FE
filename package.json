@@ -4,7 +4,9 @@
   "private": true,
   "description": "Frontend mẫu: màn hình sản phẩm (React + Vite), gọi API của website-BE",
   "type": "module",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "vite --port 5173 --strictPort",
     "build": "vite build",
@@ -13,7 +15,8 @@
   },
   "dependencies": {
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "react-router-dom": "6.30.6"
   },
   "devDependencies": {
     "@playwright/test": "1.65.1",
