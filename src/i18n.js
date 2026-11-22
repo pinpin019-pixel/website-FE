@@ -43,6 +43,10 @@ const STRINGS = {
     nextLogos: 'Next logos',
     learnMore: 'Learn more',
     postsLoadError: 'This section is unavailable right now.',
+    prevBand: 'Previous {label}',
+    nextBand: 'Next {label}',
+    testimonialTabs: 'Customers',
+    playVideo: 'Play video',
   },
   vi: {
     loading: 'Đang tải…',
@@ -64,6 +68,10 @@ const STRINGS = {
     nextLogos: 'Logo sau',
     learnMore: 'Xem thêm',
     postsLoadError: 'Hiện chưa tải được mục này.',
+    prevBand: '{label} trước',
+    nextBand: '{label} sau',
+    testimonialTabs: 'Khách hàng',
+    playVideo: 'Phát video',
   },
 };
 

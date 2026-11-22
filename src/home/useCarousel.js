@@ -10,7 +10,8 @@ export function wrapIndex(i, count) {
 
 // Bộ điều khiển: vị trí hiện tại + tự chuyển sau intervalMs. Tự chuyển tạm dừng khi có ít nhất
 // một lý do dừng ('user' = nút Tạm dừng, 'hover' = rê chuột). Mỗi lần đổi vị trí bộ đếm chạy lại từ đầu.
-export function createCarousel({ count = 0, intervalMs = 6000 } = {}) {
+// autoplay: false (KAN-11, dải Awards/Certificates/Partners) → chỉ chuyển bằng next/prev/goTo.
+export function createCarousel({ count = 0, intervalMs = 6000, autoplay = true } = {}) {
   let index = 0;
   let total = count;
   let started = false;
@@ -19,7 +20,7 @@ export function createCarousel({ count = 0, intervalMs = 6000 } = {}) {
   const listeners = new Set();
   let snapshot = null;
 
-  const canPlay = () => started && total > 1 && pauses.size === 0;
+  const canPlay = () => autoplay && started && total > 1 && pauses.size === 0;
   const emit = () => { snapshot = null; listeners.forEach((fn) => fn()); };
 
   function clear() {
@@ -65,9 +66,9 @@ export function createCarousel({ count = 0, intervalMs = 6000 } = {}) {
 }
 
 // Hook: { index, paused, playing, next, prev, goTo, togglePause, pause, resume }
-export default function useCarousel(count, { intervalMs = 6000 } = {}) {
+export default function useCarousel(count, { intervalMs = 6000, autoplay = true } = {}) {
   const ref = useRef(null);
-  if (ref.current === null) ref.current = createCarousel({ count, intervalMs });
+  if (ref.current === null) ref.current = createCarousel({ count, intervalMs, autoplay });
   const c = ref.current;
 
   useEffect(() => {
