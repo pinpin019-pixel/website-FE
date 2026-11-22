@@ -1,6 +1,7 @@
 // KAN-12: khối CTA cuối trang (FR-10.1) — tiêu đề và nút "Let's Chat!" tới trang Liên hệ, nội dung từ dữ liệu.
 import React from 'react';
 import { safeHref } from './Hero.jsx';
+import { track } from './tracking.js';
 
 const text = (x) => (typeof x === 'string' ? x.trim() : '');
 
@@ -20,7 +21,11 @@ export default function Cta({ content }) {
       <div className="cta__inner">
         {c.title && <h2 id="cta-title" className="cta__title">{c.title}</h2>}
         {c.label && (
-          <a className="btn btn--cyan cta__btn" href={c.href}>
+          <a
+            className="btn btn--cyan cta__btn"
+            href={c.href}
+            onClick={() => track('cta_click', { label: c.label, location: 'cta' })}
+          >
             {c.label} <span className="cta__arrow" aria-hidden="true">›</span>
           </a>
         )}

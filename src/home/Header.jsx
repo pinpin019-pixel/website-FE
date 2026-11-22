@@ -2,6 +2,9 @@
 import React, { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { storeLang, t } from '../i18n.js';
+import { track } from './tracking.js';
+
+const menuClick = (label) => track('menu_click', { label });
 
 // Bản sao query hiện tại với lang mới; giữ nguyên các tham số khác
 export function withLang(search, code) {
@@ -24,7 +27,7 @@ function Submenu({ item, open, onToggle }) {
     .filter(Boolean).join(' ');
   return (
     <li className={cls}>
-      <button type="button" className="nav__top" aria-expanded={open} onClick={onToggle}>
+      <button type="button" className="nav__top" aria-expanded={open} onClick={() => { menuClick(item.label); onToggle(); }}>
         {item.label}
         <span className="nav__caret" aria-hidden="true" />
       </button>
@@ -32,7 +35,9 @@ function Submenu({ item, open, onToggle }) {
         {item.columns.map((col, i) => (
           <div className="nav__group" key={col.title || i}>
             {col.title && <p className="nav__group-title">{col.title}</p>}
-            {(col.links || []).map((l) => <a key={l.label} href={l.href || '#'}>{l.label}</a>)}
+            {(col.links || []).map((l) => (
+              <a key={l.label} href={l.href || '#'} onClick={() => menuClick(l.label)}>{l.label}</a>
+            ))}
           </div>
         ))}
       </div>
@@ -50,6 +55,7 @@ export default function Header({ content, lang }) {
 
   function changeLang(e) {
     const code = e.target.value;
+    if (code !== lang) track('language_change', { from: lang, to: code });
     storeLang(code);
     setParams(withLang(params, code));
   }
@@ -81,7 +87,7 @@ export default function Header({ content, lang }) {
               />
             ) : (
               <li className="nav__item" key={item.label}>
-                <a className="nav__top" href={item.href || '#'}>{item.label}</a>
+                <a className="nav__top" href={item.href || '#'} onClick={() => menuClick(item.label)}>{item.label}</a>
               </li>
             )))}
             {languages.length > 0 && (

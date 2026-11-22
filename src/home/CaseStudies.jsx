@@ -4,6 +4,7 @@ import React from 'react';
 import { safeHref } from './Hero.jsx';
 import { blockLimit, postCards, usePosts } from './posts.js';
 import { t } from '../i18n.js';
+import { track } from './tracking.js';
 
 export default function CaseStudies({ content, lang }) {
   const c = content || {};
@@ -32,7 +33,7 @@ export default function CaseStudies({ content, lang }) {
                 <div className="case-studies__body">
                   <h3 className="case-studies__title">{p.title}</h3>
                   {p.excerpt && <p className="case-studies__excerpt">{p.excerpt}</p>}
-                  <a className="case-studies__more" href={p.url}>
+                  <a className="case-studies__more" href={p.url} onClick={() => track('case_study_click')}>
                     {t(lang, 'learnMore')} <span aria-hidden="true">›</span>
                   </a>
                 </div>

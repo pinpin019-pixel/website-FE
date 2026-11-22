@@ -15,6 +15,8 @@ import { Awards, Certificates, Partners } from './LogoCarousels.jsx';
 import Testimonials from './Testimonials.jsx';
 import Cta from './Cta.jsx';
 import Floating from './Floating.jsx';
+import CookieConsent from './CookieConsent.jsx';
+import { createScrollDepthTracker, scrollPercent } from './tracking.js';
 import './home.css';
 
 // key khối → component; story của từng khối thêm dòng của mình. Khối chưa có component thì bỏ qua.
@@ -57,11 +59,24 @@ function setMetaDescription(text) {
   el.setAttribute('content', text);
 }
 
+// KAN-13: scroll_depth 25/50/75/100, mỗi mốc tối đa một lần mỗi lượt xem (track tự bỏ qua khi chưa Accept)
+function useScrollDepth() {
+  useEffect(() => {
+    const onScrollDepth = createScrollDepthTracker();
+    const update = () => onScrollDepth(scrollPercent(
+      window.scrollY, window.innerHeight, document.documentElement.scrollHeight,
+    ));
+    window.addEventListener('scroll', update, { passive: true });
+    return () => window.removeEventListener('scroll', update);
+  }, []);
+}
+
 export default function HomePage() {
   const [params] = useSearchParams();
   const query = params.get('lang');
   const lang = resolveLang(query, readStoredLang());
   const [state, setState] = useState({ status: 'loading', blocks: [] });
+  useScrollDepth();
 
   useEffect(() => {
     if (query) storeLang(lang);
@@ -94,6 +109,7 @@ export default function HomePage() {
         return <Block key={b.key} content={b.content} lang={lang} />;
       })}
       {state.blocks.length > 0 && <Floating content={floatingOf(state.blocks)} lang={lang} />}
+      <CookieConsent lang={lang} />
     </div>
   );
 }

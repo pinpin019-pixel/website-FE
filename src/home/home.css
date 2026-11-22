@@ -907,3 +907,38 @@ body:has(.home) { margin: 0; }
 @media (prefers-reduced-motion: reduce) {
   .home .to-top { transition: none; }
 }
+
+/* ===== Banner đồng ý cookie (KAN-13) ===== */
+/* Góc dưới trái, chừa chỗ cho nút chat ở góc dưới phải */
+.cookie-consent {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 300;
+  width: 360px;
+  max-width: calc(100vw - 110px);
+  padding: 16px;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.cookie-consent__text { margin: 0 0 12px; }
+/* Hai cột bằng nhau: Accept và Reject cùng rộng, cùng cao */
+.cookie-consent__actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.home .cookie-consent__btn {
+  justify-self: stretch; /* styles.css đặt button { justify-self: start } */
+  min-width: 0;
+  padding: 10px 12px;
+  border: 2px solid var(--navy);
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.home .cookie-consent__accept { background: var(--navy); color: #fff; }
+.home .cookie-consent__reject { background: #fff; color: var(--navy); }
+.home .cookie-consent__btn:focus-visible { outline: 3px solid var(--cyan); outline-offset: 2px; }
