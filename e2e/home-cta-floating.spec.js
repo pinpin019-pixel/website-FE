@@ -110,8 +110,10 @@ test('KAN-12: TC-051 Back to top ẩn khi chưa cuộn quá 1 màn hình, hiện
   expect(sh).toBeGreaterThan(2 * ih); // tiền điều kiện: trang dài hơn 2 màn hình
 
   await expect(toTop(page)).toBeHidden();
+  // Trình duyệt có thể làm tròn vị trí cuộn lệch 1–2px: chỉ cần đã cuộn gần tới nhưng chưa quá 1 màn hình
   await page.evaluate((y) => window.scrollTo(0, y), ih - 10);
-  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(ih - 10);
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(ih - 20);
+  expect(await page.evaluate(() => window.scrollY)).toBeLessThanOrEqual(ih);
   await expect(toTop(page)).toBeHidden();
 
   await page.evaluate((y) => window.scrollTo(0, y), ih + 200);
