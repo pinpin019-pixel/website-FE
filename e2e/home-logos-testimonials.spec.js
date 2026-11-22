@@ -147,9 +147,10 @@ test('KAN-11: TC-046 mỗi lúc 1 slide đủ trích dẫn, tên, chức danh, �
     await expect(tabs(page).nth(i).locator('img')).toHaveAttribute('loading', 'lazy');
   }
 
-  await page.clock.runFor(7900);
+  // Bộ đếm chạy từ lúc slider mount, sớm hơn lúc dừng đồng hồ một chút → chừa 1 giây như TC-025 (KAN-8)
+  await page.clock.runFor(7000);
   await expect(panels(page).first()).toContainText(data.items[0].name);
-  await page.clock.runFor(100);
+  await page.clock.runFor(1000);
   await expect(panels(page)).toHaveCount(1);
   await expect(panels(page).first()).toContainText(data.items[1].quote);
   await expect(tabs(page).nth(1)).toHaveAttribute('aria-selected', 'true');
