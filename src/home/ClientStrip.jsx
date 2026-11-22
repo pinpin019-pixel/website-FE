@@ -48,8 +48,8 @@ export default function ClientStrip({ content, lang }) {
         </button>
         <div className="clients__view">
           <ul className="clients__track" style={{ transform: `translateX(-${(c.index * 100) / perView}%)` }}>
-            {logos.map((l) => (
-              <li className="clients__item" key={l.imageUrl}>
+            {logos.map((l, i) => (
+              <li className="clients__item" key={`${i}-${l.imageUrl}`}>
                 <img src={l.imageUrl} alt={l.name} loading="lazy" />
               </li>
             ))}

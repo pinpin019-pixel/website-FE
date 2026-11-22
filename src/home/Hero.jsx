@@ -13,6 +13,14 @@ export function heroSlides(content) {
   return list.filter((s) => s && typeof s.title === 'string' && s.title.trim()).slice(0, MAX_SLIDES);
 }
 
+// Link từ dữ liệu: chỉ nhận http(s), mailto, tel hoặc đường dẫn không có scheme; còn lại → '#'
+export function safeHref(href) {
+  if (typeof href !== 'string' || !href.trim()) return '#';
+  const scheme = href.replace(/[\u0000- ]/g, '').match(/^([a-z][a-z0-9+.-]*):/i);
+  if (!scheme) return href;
+  return ['http', 'https', 'mailto', 'tel'].includes(scheme[1].toLowerCase()) ? href : '#';
+}
+
 export function heroInterval(content) {
   const ms = content?.intervalMs;
   return typeof ms === 'number' && ms > 0 ? ms : DEFAULT_INTERVAL_MS;
@@ -70,7 +78,7 @@ export default function Hero({ content, lang }) {
                   <Title className="hero__title">{s.title}</Title>
                   {s.description && <p className="hero__desc">{s.description}</p>}
                   {s.ctaLabel && (
-                    <a className="hero__cta" href={s.ctaHref || '#'} tabIndex={active ? undefined : -1}>{s.ctaLabel}</a>
+                    <a className="hero__cta" href={safeHref(s.ctaHref)} tabIndex={active ? undefined : -1}>{s.ctaLabel}</a>
                   )}
                 </div>
               </div>
