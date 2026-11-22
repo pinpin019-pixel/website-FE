@@ -1,7 +1,8 @@
 import { expect, test } from '@playwright/test';
 
+// KAN-6: màn hình Sản phẩm chuyển từ / sang /products
 test('hiện danh sách sản phẩm từ backend', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/products');
   await expect(page.getByRole('heading', { name: 'Sản phẩm' })).toBeVisible();
   const table = page.getByRole('table', { name: 'Danh sách sản phẩm' });
   await expect(table).toBeVisible();
@@ -10,7 +11,7 @@ test('hiện danh sách sản phẩm từ backend', async ({ page }) => {
 
 test('thêm sản phẩm mới và thấy trong danh sách', async ({ page }) => {
   const name = `SP thử ${Date.now()}`;
-  await page.goto('/');
+  await page.goto('/products');
   await page.getByLabel('Tên sản phẩm').fill(name);
   await page.getByLabel('Giá (₫)').fill('125000');
   await page.getByRole('button', { name: 'Thêm sản phẩm' }).click();
@@ -20,7 +21,7 @@ test('thêm sản phẩm mới và thấy trong danh sách', async ({ page }) =>
 });
 
 test('báo lỗi khi bỏ trống tên', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/products');
   await page.getByLabel('Giá (₫)').fill('1000');
   await page.getByRole('button', { name: 'Thêm sản phẩm' }).click();
   await expect(page.getByRole('alert')).toHaveText('Tên sản phẩm là bắt buộc');
