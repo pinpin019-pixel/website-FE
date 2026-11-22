@@ -1,6 +1,23 @@
 // KAN-11: slider Testimonials — lọc item, chu kỳ 8 giây, nguồn video chỉ nhận http(s)
 import { describe, expect, test } from 'vitest';
-import { TESTIMONIAL_INTERVAL_MS, testimonialInterval, testimonialItems, videoSource } from './Testimonials.jsx';
+import { TESTIMONIAL_INTERVAL_MS, slideMedia, testimonialInterval, testimonialItems, videoSource } from './Testimonials.jsx';
+
+describe('KAN-11 slideMedia (sau review: alt đúng nghĩa ảnh)', () => {
+  test('ảnh chân dung riêng → alt là tên người', () => {
+    expect(slideMedia({ name: 'Mr. A', company: 'Acme', photoUrl: 'https://x/p.jpg', logoUrl: 'https://x/l.png' }))
+      .toEqual({ src: 'https://x/p.jpg', alt: 'Mr. A' });
+  });
+  test('ảnh chính là logo (trùng logoUrl hoặc không có photoUrl) → alt là tên công ty', () => {
+    expect(slideMedia({ name: 'Mr. B', company: 'Envato', photoUrl: 'https://x/l.png', logoUrl: 'https://x/l.png' }))
+      .toEqual({ src: 'https://x/l.png', alt: 'Envato' });
+    expect(slideMedia({ name: 'Mr. C', company: 'Kaon', logoUrl: 'https://x/k.png' }))
+      .toEqual({ src: 'https://x/k.png', alt: 'Kaon' });
+  });
+  test('logo không có tên công ty → alt là tên người; không có ảnh → null', () => {
+    expect(slideMedia({ name: 'Mr. D', logoUrl: 'https://x/d.png' })).toEqual({ src: 'https://x/d.png', alt: 'Mr. D' });
+    expect(slideMedia({ name: 'Mr. E' })).toBeNull();
+  });
+});
 
 describe('KAN-11 testimonialItems (FR-09.1)', () => {
   test('giữ item có trích dẫn và tên, đúng thứ tự', () => {
